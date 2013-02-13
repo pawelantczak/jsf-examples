@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Example 03 - Value Change Listener</title>
+</h:head>
+
+<h:body>
+	<h1>Welcome</h1>
+	<h:form>
+		<h:panelGrid columns="3">
+
+			<h:outputLabel for="usernameField" value="Username"></h:outputLabel>
+			<h:inputText id="usernameField" value="#{loginBean.userName}"
+				required="true"></h:inputText>
+			<h:message for="usernameField"></h:message>
+
+			<h:outputLabel for="passwordField" value="Password"></h:outputLabel>
+			<h:inputSecret id="passwordField" value="#{loginBean.userPass}">
+				<c:validateLength minimum="4" maximum="6"></c:validateLength>
+			</h:inputSecret>
+			<h:message for="passwordField"></h:message>
+
+			<h:commandButton id="loginButton" value="Login"
+				action="#{loginBean.checkUser}" binding="#{loginBean.loginButton}"
+				disabled="true" />
+		</h:panelGrid>
+		<h:selectBooleanCheckbox id="acceptCheckBox"
+			binding="#{loginBean.acceptCheckbox}"
+			valueChangeListener="#{loginBean.activateButton}">
+
+			<c:ajax event="change" render="loginButton" />
+
+		</h:selectBooleanCheckbox>
+		<h:outputText value="Do you agree?" />
+	</h:form>
+</h:body>
+</html>
+
