@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Example 04 - Custom Error Messages, Converters,
+		Dependency Injection</title>
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
+<h:body>
+	<h1>Users list:</h1>
+	<h:form id="mainform">
+		<h:dataTable id="usersList" value="#{indexBean.users}" var="u"
+			styleClass="order-table" headerClass="order-table-header"
+			rowClasses="order-table-odd-row,order-table-even-row">
+
+			<h:column>
+				<c:facet name="header">
+    				ID
+    			</c:facet>
+    				#{u.id}
+    		</h:column>
+
+			<h:column>
+				<c:facet name="header">
+    				First Name
+				</c:facet>
+    				#{u.firstName}
+    		</h:column>
+
+			<h:column>
+				<c:facet name="header">
+    				Last name
+				</c:facet>
+    				#{u.lastName}
+    		</h:column>
+
+			<h:column>
+				<c:facet name="header">
+    				Birthdate
+				</c:facet>
+    				#{u.birthDate}
+    		</h:column>
+
+			<h:column>
+				<c:facet name="header">
+    				Delete
+				</c:facet>
+				<h:commandLink action="#{indexBean.removeUser(u)}"
+					value="Delete (AJAX)">
+					<c:ajax render="@form"></c:ajax>
+				</h:commandLink>
+			</h:column>
+
+		</h:dataTable>
+	</h:form>
+	<h2>Add new:</h2>
+	<h:form>
+		<h:panelGrid columns="3">
+			<h:outputLabel for="userIdField" value="id:"></h:outputLabel>
+			<h:inputText id="userIdField" value="#{indexBean.userId}"
+				required="true">
+				<c:convertNumber integerOnly="true"></c:convertNumber>
+			</h:inputText>
+			<h:message for="userIdField"></h:message>
+
+			<h:outputLabel for="userFirstNameField" value="first name:"></h:outputLabel>
+			<h:inputText id="userFirstNameField"
+				value="#{indexBean.userFirstName}" required="true"></h:inputText>
+			<h:message for="userFirstNameField"></h:message>
+
+			<h:outputLabel for="userLastNameField" value="last name:"></h:outputLabel>
+			<h:inputText id="userLastNameField" value="#{indexBean.userLastName}"
+				required="true"></h:inputText>
+			<h:message for="userLastNameField"></h:message>
+
+			<h:outputLabel for="userBirthDateField" value="birth date:"></h:outputLabel>
+			<h:inputText id="userBirthDateField"
+				value="#{indexBean.userBirthDate}" required="true">
+				<c:convertDateTime id="tmp" pattern="yyyy-M-d" />
+			</h:inputText>
+			<h:message for="userBirthDateField"></h:message>
+		</h:panelGrid>
+		<h:commandButton value="Add user" action="#{indexBean.addUser()}" />
+		<h:outputText id="msg" value=" #{indexBean.message}" />
+
+	</h:form>
+</h:body>
+</html>
+
